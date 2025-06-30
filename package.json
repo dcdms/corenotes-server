@@ -1,5 +1,5 @@
 {
-  "name": "hono",
+  "name": "@corenotes/server",
   "type": "module",
   "version": "1.0.0",
   "types": "dist/server.d.ts",
