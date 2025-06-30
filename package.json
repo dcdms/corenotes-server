@@ -1,7 +1,7 @@
 {
   "name": "@corenotes/server",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "types": "dist/server.d.ts",
   "main": "dist/server.d.ts",
   "files": ["dist/server.d.ts"],
