@@ -10,7 +10,7 @@ export const auth = createMiddleware(async (c, next) => {
   const token = getCookie(c, ACCESS_TOKEN_COOKIE_NAME)
 
   if (!token) {
-    return
+    return c.json({ error: 'unauthorized' }, 401)
   }
 
   try {

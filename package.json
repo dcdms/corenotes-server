@@ -4,11 +4,15 @@
   "version": "1.0.2",
   "types": "dist/server.d.ts",
   "main": "dist/server.d.ts",
-  "files": ["dist/server.d.ts"],
+  "files": [
+    "dist/server.d.ts"
+  ],
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsup",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "lint": "biome check",
+    "lint:fix": "biome check --write"
   },
   "dependencies": {
     "@biomejs/biome": "^2.0.6",
