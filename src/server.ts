@@ -1,12 +1,21 @@
 import { serve } from '@hono/node-server'
 import { Scalar } from '@scalar/hono-api-reference'
 import { Hono } from 'hono'
+import { cors } from 'hono/cors'
 import { openAPISpecs } from 'hono-openapi'
 import { config } from '@/config'
 import { auth } from '@/routes/auth'
 import { tasks } from '@/routes/tasks'
 
 const app = new Hono().route('/', auth).route('/', tasks)
+
+app.use(
+  '*',
+  cors({
+    origin: config.WEBSITE_BASE_URL,
+    credentials: true,
+  }),
+)
 
 app.get('/reference', Scalar({ url: '/docs', theme: 'elysiajs' }))
 
