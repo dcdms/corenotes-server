@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    // Environment
+    "target": "ESNext",
+    "module": "preserve",
+    "types": ["node"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
+    "outDir": "dist",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+
+    // Bundler mode
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+
+    // Best practices
+    "strict": true,
+    "skipLibCheck": true,
+
+    // Path aliases
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+  },
+  "exclude": ["node_modules", "dist"]
+}
