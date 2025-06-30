@@ -7,8 +7,6 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "outDir": "dist",
-    "declaration": true,
-    "emitDeclarationOnly": true,
 
     // Bundler mode
     "moduleResolution": "bundler",
