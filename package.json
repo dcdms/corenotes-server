@@ -5,9 +5,6 @@
   "types": "dist/server.d.ts",
   "main": "dist/server.d.ts",
   "files": ["dist/server.d.ts"],
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsup",
