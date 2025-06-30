@@ -7,15 +7,18 @@ import { config } from '@/config'
 import { auth } from '@/routes/auth'
 import { tasks } from '@/routes/tasks'
 
-const app = new Hono().route('/', auth).route('/', tasks)
-
-app.use(
-  '*',
-  cors({
-    origin: config.WEBSITE_BASE_URL,
-    credentials: true,
-  }),
-)
+const app = new Hono()
+  .use(
+    '*',
+    cors({
+      origin: config.WEBSITE_BASE_URL,
+      allowMethods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+      exposeHeaders: ['Content-Length'],
+      credentials: true,
+    }),
+  )
+  .route('/', auth)
+  .route('/', tasks)
 
 app.get('/reference', Scalar({ url: '/docs', theme: 'elysiajs' }))
 

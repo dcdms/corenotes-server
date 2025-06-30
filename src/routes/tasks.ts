@@ -100,10 +100,6 @@ const tasks = new Hono<{ Variables: MiddlewareVariables }>()
       const { title, description, favorite } = c.req.valid('json')
       const { user } = c.var
 
-      if (!user) {
-        return c.json({ error: 'unauthorized' }, 401)
-      }
-
       const id = ulid()
 
       const color =
