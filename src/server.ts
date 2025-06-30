@@ -6,10 +6,7 @@ import { config } from '@/config'
 import { auth } from '@/routes/auth'
 import { tasks } from '@/routes/tasks'
 
-const app = new Hono()
-
-app.route('/', auth)
-app.route('/', tasks)
+const app = new Hono().route('/', auth).route('/', tasks)
 
 app.get('/reference', Scalar({ url: '/docs', theme: 'elysiajs' }))
 
@@ -36,3 +33,5 @@ serve(
     console.log('server is running on http://localhost:' + info.port)
   },
 )
+
+export type AppType = typeof app
