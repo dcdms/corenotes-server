@@ -45,7 +45,7 @@ const auth = new Hono()
       const link = new URL('/auth/links/' + id, config.BASE_URL)
 
       await resend.emails.send({
-        from: 'Corenotes <corenotes@resend.dev>',
+        from: 'Corenotes <corenotes@dcdms.me>',
         to: [email],
         subject: 'Login to Corenotes',
         html: 'Your link is ' + link.href,
