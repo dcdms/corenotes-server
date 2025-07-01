@@ -35,7 +35,7 @@ export const color = pgEnum('color', [
   'light_brown',
 ])
 
-export const tasks = pgTable('tasks', {
+export const notes = pgTable('notes', {
   id: char({ length: 26 }).primaryKey(),
   user_id: char({ length: 26 })
     .notNull()

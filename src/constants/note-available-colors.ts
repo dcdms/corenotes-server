@@ -1,4 +1,4 @@
-export const TASK_AVAILABLE_COLORS = [
+export const NOTE_AVAILABLE_COLORS = [
   'white',
   'light_blue',
   'mint_green',

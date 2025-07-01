@@ -5,7 +5,7 @@ import { cors } from 'hono/cors'
 import { openAPISpecs } from 'hono-openapi'
 import { config } from '@/config'
 import { auth } from '@/routes/auth'
-import { tasks } from '@/routes/tasks'
+import { notes } from '@/routes/notes'
 
 const app = new Hono()
   .use(
@@ -18,7 +18,7 @@ const app = new Hono()
     }),
   )
   .route('/', auth)
-  .route('/', tasks)
+  .route('/', notes)
 
 app.get('/reference', Scalar({ url: '/docs', theme: 'elysiajs' }))
 
@@ -29,7 +29,7 @@ app.get(
       info: {
         title: 'Corenotes REST API',
         description:
-          'Modern Hono-based API with passwordless authentication and task management.',
+          'Modern Hono-based API with passwordless authentication and notes management.',
         version: '1.0.0',
       },
     },

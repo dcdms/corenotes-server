@@ -5,19 +5,19 @@ import { describeRoute } from 'hono-openapi'
 import { resolver } from 'hono-openapi/zod'
 import { ulid } from 'ulid'
 import { z } from 'zod'
-import { TASK_AVAILABLE_COLORS } from '@/constants/task-available-colors'
+import { NOTE_AVAILABLE_COLORS } from '@/constants/note-available-colors'
 import { db } from '@/db/connection'
-import { tasks as _tasks } from '@/db/schema'
+import { notes as _notes } from '@/db/schema'
 import { auth, type MiddlewareVariables } from '@/middlewares/auth'
 
-const tasks = new Hono<{ Variables: MiddlewareVariables }>()
-  .use('/tasks/*', auth)
+const notes = new Hono<{ Variables: MiddlewareVariables }>()
+  .use('/notes/*', auth)
   .get(
-    '/tasks',
+    '/notes',
     describeRoute({
-      summary: 'List tasks',
-      operationId: 'list_tasks',
-      tags: ['tasks'],
+      summary: 'List notes',
+      operationId: 'list_notes',
+      tags: ['notes'],
       responses: {
         200: {
           description: 'Successful Response',
@@ -25,12 +25,12 @@ const tasks = new Hono<{ Variables: MiddlewareVariables }>()
             'application/json': {
               schema: resolver(
                 z.object({
-                  tasks: z.array(
+                  notes: z.array(
                     z.object({
                       id: z.string(),
                       title: z.string(),
                       description: z.string(),
-                      color: z.enum(TASK_AVAILABLE_COLORS),
+                      color: z.enum(NOTE_AVAILABLE_COLORS),
                       favorite: z.boolean(),
                     }),
                   ),
@@ -46,32 +46,32 @@ const tasks = new Hono<{ Variables: MiddlewareVariables }>()
       const { search } = c.req.valid('query')
       const { user } = c.var
 
-      const list = await db
+      const notes = await db
         .select({
-          id: _tasks.id,
-          title: _tasks.title,
-          description: _tasks.description,
-          color: _tasks.color,
-          favorite: _tasks.favorite,
+          id: _notes.id,
+          title: _notes.title,
+          description: _notes.description,
+          color: _notes.color,
+          favorite: _notes.favorite,
         })
-        .from(_tasks)
+        .from(_notes)
         .where(
           and(
-            eq(_tasks.user_id, user),
-            search ? ilike(_tasks.title, '%' + search + '%') : undefined,
+            eq(_notes.user_id, user),
+            search ? ilike(_notes.title, '%' + search + '%') : undefined,
           ),
         )
-        .orderBy(desc(_tasks.id))
+        .orderBy(desc(_notes.id))
 
-      return c.json({ tasks: list })
+      return c.json({ notes })
     },
   )
   .post(
-    '/tasks',
+    '/notes',
     describeRoute({
-      summary: 'Create task',
-      operationId: 'create_task',
-      tags: ['tasks'],
+      summary: 'Create note',
+      operationId: 'create_note',
+      tags: ['notes'],
       responses: {
         201: {
           description: 'Successful Response',
@@ -98,7 +98,7 @@ const tasks = new Hono<{ Variables: MiddlewareVariables }>()
       const id = ulid()
 
       await db
-        .insert(_tasks)
+        .insert(_notes)
         .values({
           id,
           user_id: user,
@@ -111,11 +111,11 @@ const tasks = new Hono<{ Variables: MiddlewareVariables }>()
     },
   )
   .patch(
-    '/tasks/:id',
+    '/notes/:id',
     describeRoute({
-      summary: 'Edit task',
-      operationId: 'edit_task',
-      tags: ['tasks'],
+      summary: 'Edit note',
+      operationId: 'edit_note',
+      tags: ['notes'],
       responses: {
         204: { description: 'Successful Response' },
         404: {
@@ -123,7 +123,7 @@ const tasks = new Hono<{ Variables: MiddlewareVariables }>()
           content: {
             'application/json': {
               schema: resolver(
-                z.object({ error: z.literal('task_not_found') }),
+                z.object({ error: z.literal('note_not_found') }),
               ),
             },
           },
@@ -137,7 +137,7 @@ const tasks = new Hono<{ Variables: MiddlewareVariables }>()
         .object({
           title: z.string(),
           description: z.string(),
-          color: z.enum(TASK_AVAILABLE_COLORS),
+          color: z.enum(NOTE_AVAILABLE_COLORS),
           favorite: z.boolean(),
         })
         .partial(),
@@ -147,29 +147,29 @@ const tasks = new Hono<{ Variables: MiddlewareVariables }>()
       const { title, description, color, favorite } = c.req.valid('json')
       const { user } = c.var
 
-      const [task] = await db
+      const [note] = await db
         .select()
-        .from(_tasks)
-        .where(and(eq(_tasks.id, id), eq(_tasks.user_id, user)))
+        .from(_notes)
+        .where(and(eq(_notes.id, id), eq(_notes.user_id, user)))
 
-      if (!task) {
-        return c.json({ error: 'task_not_found' }, 404)
+      if (!note) {
+        return c.json({ error: 'note_not_found' }, 404)
       }
 
       await db
-        .update(_tasks)
+        .update(_notes)
         .set({ title, description, color, favorite })
-        .where(eq(_tasks.id, id))
+        .where(eq(_notes.id, id))
 
       return c.body(null, 204)
     },
   )
   .delete(
-    '/tasks/:id',
+    '/notes/:id',
     describeRoute({
-      summary: 'Delete task',
-      operationId: 'delete_task',
-      tags: ['tasks'],
+      summary: 'Delete note',
+      operationId: 'delete_note',
+      tags: ['notes'],
       responses: {
         204: { description: 'Successful Response' },
         404: {
@@ -177,7 +177,7 @@ const tasks = new Hono<{ Variables: MiddlewareVariables }>()
           content: {
             'application/json': {
               schema: resolver(
-                z.object({ error: z.literal('task_not_found') }),
+                z.object({ error: z.literal('note_not_found') }),
               ),
             },
           },
@@ -189,19 +189,19 @@ const tasks = new Hono<{ Variables: MiddlewareVariables }>()
       const { id } = c.req.valid('param')
       const { user } = c.var
 
-      const [task] = await db
+      const [note] = await db
         .select()
-        .from(_tasks)
-        .where(and(eq(_tasks.id, id), eq(_tasks.user_id, user)))
+        .from(_notes)
+        .where(and(eq(_notes.id, id), eq(_notes.user_id, user)))
 
-      if (!task) {
-        return c.json({ error: 'task_not_found' }, 404)
+      if (!note) {
+        return c.json({ error: 'note_not_found' }, 404)
       }
 
-      await db.delete(_tasks).where(eq(_tasks.id, id))
+      await db.delete(_notes).where(eq(_notes.id, id))
 
       return c.body(null, 204)
     },
   )
 
-export { tasks }
+export { notes }
