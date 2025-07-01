@@ -1,4 +1,5 @@
 export const TASK_AVAILABLE_COLORS = [
+  'white',
   'light_blue',
   'mint_green',
   'light_yellow',

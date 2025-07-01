@@ -20,6 +20,7 @@ export const one_time_tokens = pgTable('one_time_tokens', {
 })
 
 export const color = pgEnum('color', [
+  'white',
   'light_blue',
   'mint_green',
   'light_yellow',
@@ -41,6 +42,6 @@ export const tasks = pgTable('tasks', {
     .references(() => users.id),
   title: text().notNull(),
   description: text().notNull(),
-  color: color().notNull(),
+  color: color().notNull().default('white'),
   favorite: boolean().notNull().default(false),
 })

@@ -77,12 +77,7 @@ const tasks = new Hono<{ Variables: MiddlewareVariables }>()
           description: 'Successful Response',
           content: {
             'application/json': {
-              schema: resolver(
-                z.object({
-                  id: z.string().ulid(),
-                  color: z.enum(TASK_AVAILABLE_COLORS),
-                }),
-              ),
+              schema: resolver(z.object({ id: z.string().ulid() })),
             },
           },
         },
@@ -102,17 +97,17 @@ const tasks = new Hono<{ Variables: MiddlewareVariables }>()
 
       const id = ulid()
 
-      const color =
-        // biome-ignore lint/style/noNonNullAssertion: this code always hits a color
-        TASK_AVAILABLE_COLORS[
-          Math.round(Math.random() * (TASK_AVAILABLE_COLORS.length - 1))
-        ]!
-
       await db
         .insert(_tasks)
-        .values({ id, user_id: user, title, description, color, favorite })
+        .values({
+          id,
+          user_id: user,
+          title,
+          description,
+          favorite,
+        })
 
-      return c.json({ id, color }, 201)
+      return c.json({ id }, 201)
     },
   )
   .patch(
