@@ -1,4 +1,4 @@
-CREATE TYPE "public"."color" AS ENUM('light_blue', 'mint_green', 'light_yellow', 'light_peach', 'coral', 'sky_blue', 'lavender', 'yellow_green', 'light_orange', 'light_gray', 'medium_gray', 'light_brown');--> statement-breakpoint
+CREATE TYPE "public"."color" AS ENUM('white', 'light_blue', 'mint_green', 'light_yellow', 'light_peach', 'coral', 'sky_blue', 'lavender', 'yellow_green', 'light_orange', 'light_gray', 'medium_gray', 'light_brown');--> statement-breakpoint
 CREATE TABLE "one_time_tokens" (
 	"id" char(26) PRIMARY KEY NOT NULL,
 	"email" text NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE "tasks" (
 	"user_id" char(26) NOT NULL,
 	"title" text NOT NULL,
 	"description" text NOT NULL,
-	"color" "color" NOT NULL,
+	"color" "color" DEFAULT 'white' NOT NULL,
 	"favorite" boolean DEFAULT false NOT NULL
 );
 --> statement-breakpoint

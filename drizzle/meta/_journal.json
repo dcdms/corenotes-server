@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1751240944333,
-      "tag": "0000_flat_the_renegades",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1751323010625,
-      "tag": "0001_careful_mephistopheles",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1751323112699,
-      "tag": "0002_powerful_frank_castle",
+      "when": 1751374298374,
+      "tag": "0000_tough_epoch",
       "breakpoints": true
     }
   ]

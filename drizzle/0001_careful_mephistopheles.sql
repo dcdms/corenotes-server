@@ -1,1 +1,0 @@
-ALTER TYPE "public"."color" ADD VALUE 'white' BEFORE 'light_blue';

@@ -1,5 +1,5 @@
 {
-  "id": "6b53c954-3eae-4129-af5e-1abd55449080",
+  "id": "5642d4ed-809b-4a67-9c41-f859ccccf568",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -75,7 +75,8 @@
           "type": "color",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'white'"
         },
         "favorite": {
           "name": "favorite",
@@ -91,8 +92,12 @@
           "name": "tasks_user_id_users_id_fk",
           "tableFrom": "tasks",
           "tableTo": "users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -127,7 +132,9 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": ["email"]
+          "columns": [
+            "email"
+          ]
         }
       },
       "policies": {},
@@ -140,6 +147,7 @@
       "name": "color",
       "schema": "public",
       "values": [
+        "white",
         "light_blue",
         "mint_green",
         "light_yellow",
