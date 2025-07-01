@@ -41,9 +41,19 @@ const notes = new Hono<{ Variables: MiddlewareVariables }>()
         },
       },
     }),
-    zValidator('query', z.object({ search: z.string().optional() })),
+    zValidator(
+      'query',
+      z.object({
+        search: z.string().optional(),
+        color: z.enum(NOTE_AVAILABLE_COLORS).optional(),
+        favorite: z
+          .enum(['true', 'false'])
+          .transform((f) => f === 'true')
+          .optional(),
+      }),
+    ),
     async (c) => {
-      const { search } = c.req.valid('query')
+      const { search, color, favorite } = c.req.valid('query')
       const { user } = c.var
 
       const notes = await db
@@ -59,6 +69,8 @@ const notes = new Hono<{ Variables: MiddlewareVariables }>()
           and(
             eq(_notes.user_id, user),
             search ? ilike(_notes.title, '%' + search + '%') : undefined,
+            color ? eq(_notes.color, color) : undefined,
+            favorite !== undefined ? eq(_notes.favorite, favorite) : undefined,
           ),
         )
         .orderBy(desc(_notes.id))
@@ -97,15 +109,13 @@ const notes = new Hono<{ Variables: MiddlewareVariables }>()
 
       const id = ulid()
 
-      await db
-        .insert(_notes)
-        .values({
-          id,
-          user_id: user,
-          title,
-          description,
-          favorite,
-        })
+      await db.insert(_notes).values({
+        id,
+        user_id: user,
+        title,
+        description,
+        favorite,
+      })
 
       return c.json({ id }, 201)
     },
