@@ -105,6 +105,7 @@ const auth = new Hono()
       setCookie(c, ACCESS_TOKEN_COOKIE_NAME, accessToken, {
         httpOnly: true,
         maxAge: ACCESS_TOKEN_LIFETIME,
+        secure: config.NODE_ENV === 'production',
       })
 
       return c.redirect(config.WEBSITE_BASE_URL)

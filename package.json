@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsup",
-    "start": "node dist/server.js",
+    "start": "NODE_ENV=production node dist/server.js",
     "lint": "biome check",
     "lint:fix": "biome check --write",
     "db:generate": "drizzle-kit generate",
