@@ -2,7 +2,7 @@ import { zValidator } from '@hono/zod-validator'
 import { addMinutes, isFuture } from 'date-fns'
 import { eq } from 'drizzle-orm'
 import { Hono } from 'hono'
-import { setCookie } from 'hono/cookie'
+import { deleteCookie, setCookie } from 'hono/cookie'
 import { sign } from 'hono/jwt'
 import { describeRoute } from 'hono-openapi'
 import { ulid } from 'ulid'
@@ -108,6 +108,21 @@ const auth = new Hono()
       })
 
       return c.redirect(config.WEBSITE_BASE_URL)
+    },
+  )
+  .delete(
+    '/logout',
+    describeRoute({
+      summary: 'Logout',
+      operationId: 'logout',
+      tags: ['auth'],
+      responses: {
+        204: { description: 'Successful Response' },
+      },
+    }),
+    (c) => {
+      deleteCookie(c, ACCESS_TOKEN_COOKIE_NAME)
+      return c.body(null, 204)
     },
   )
 
