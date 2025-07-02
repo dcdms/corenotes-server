@@ -11,6 +11,8 @@ export const auth = createMiddleware(async (c, next) => {
     c.req.header('Authorization')?.replace('Bearer ', '') ??
     getCookie(c, ACCESS_TOKEN_COOKIE_NAME)
 
+  console.log('TOKEN: ', token)
+
   if (!token) {
     return c.json({ error: 'unauthorized' }, 401)
   }
@@ -21,7 +23,8 @@ export const auth = createMiddleware(async (c, next) => {
 
     c.set('user', sub)
     await next()
-  } catch {
+  } catch (err) {
+    console.log('ERROR: ', err)
     return c.json({ error: 'unauthorized' }, 401)
   }
 })
