@@ -3,6 +3,7 @@ import { Scalar } from '@scalar/hono-api-reference'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { openAPISpecs } from 'hono-openapi'
+import PACKAGE from 'package.json'
 import { config } from '@/config'
 import { auth } from '@/routes/auth'
 import { notes } from '@/routes/notes'
@@ -30,7 +31,7 @@ app.get(
         title: 'Corenotes REST API',
         description:
           'Modern Hono-based API with passwordless authentication and notes management.',
-        version: '1.0.0',
+        version: PACKAGE.version,
       },
     },
   }),

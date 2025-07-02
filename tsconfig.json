@@ -16,9 +16,10 @@
     "strict": true,
     "skipLibCheck": true,
 
-    // Path aliases
+    // Paths
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
     }
   },
   "exclude": ["node_modules", "dist"]
