@@ -106,6 +106,7 @@ const auth = new Hono()
         httpOnly: true,
         maxAge: ACCESS_TOKEN_LIFETIME,
         secure: config.NODE_ENV === 'production',
+        sameSite: 'None'
       })
 
       return c.redirect(config.WEBSITE_BASE_URL)
