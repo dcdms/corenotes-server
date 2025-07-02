@@ -11,7 +11,7 @@ const app = new Hono()
   .use(
     '*',
     cors({
-      origin: '*',
+      origin: config.WEBSITE_BASE_URL,
       allowMethods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
       allowHeaders: ['content-type'],
       credentials: true,
